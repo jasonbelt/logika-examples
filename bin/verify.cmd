@@ -41,7 +41,7 @@ for (file <- Os.Path.walk(home / "src", F, F, (p: Os.Path) => p.ext == "sc" || p
   val reporter = message.Reporter.create
   println(s"Verifying $file ...")
   reporter.printMessages()
-  val results = proc"sireum logika verifier ${file.string}".console.run()
+  val results = proc"$sireum logika verifier ${file.string}".console.run()
   println(results.exitCode)
   println(results.out)
   println(results.err)
