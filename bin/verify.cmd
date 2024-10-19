@@ -22,9 +22,9 @@ val home = Os.slashDir.up.canon
 val sireumHome = Os.sireumHomeOpt.get
 val sireum = sireumHome / "bin" / (if (Os.isWin) "sireum.bat" else "sireum")
 
-println(home)
-println(sireumHome)
-println(sireum)
+println(s"home=$home")
+println(s"sireumHome=$sireumHome")
+println(s"sireum=$sireum")
 
 Sireum.initRuntimeLibrary()
 
@@ -32,7 +32,7 @@ var ok = T
 var passing = 0
 var failing = ISZ[Os.Path]()
 
-println((home / "src").exists)
+println(s"exists?=${(home / "src").exists}")
 
 val x = Os.Path.walk(home / "src", F, F, (p: Os.Path) => p.ext == "sc" || p.ext == "logika")
 println(x)
