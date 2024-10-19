@@ -43,6 +43,8 @@ for (file <- Os.Path.walk(home / "src", F, F, (p: Os.Path) => p.ext == "sc" || p
   reporter.printMessages()
   val results = proc"sireum logika verifier ${file.string}".console.run()
   println(results.exitCode)
+  println(results.out)
+  println(results.err)
   /*}
   if (Sireum.runWithReporter(ISZ("logika", "verifier", file.string), reporter)._1 != 0) {
     ok = F
