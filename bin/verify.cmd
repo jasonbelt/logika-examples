@@ -22,22 +22,35 @@ val home = Os.slashDir.up.canon
 val sireumHome = Os.sireumHomeOpt.get
 val sireum = sireumHome / "bin" / (if (Os.isWin) "sireum.bat" else "sireum")
 
+println(home)
+println(sireumHome)
+println(sireum)
+
 Sireum.initRuntimeLibrary()
 
 var ok = T
 var passing = 0
 var failing = ISZ[Os.Path]()
 
+println((home / "src").exists)
+
+val x = Os.Path.walk(home / "src", F, F, (p: Os.Path) => p.ext == "sc" || p.ext == "logika")
+println(x)
+
 for (file <- Os.Path.walk(home / "src", F, F, (p: Os.Path) => p.ext == "sc" || p.ext == "logika")) {
   val reporter = message.Reporter.create
   println(s"Verifying $file ...")
   reporter.printMessages()
+  val results = proc"sireum logika verifier ${file.string}".console.run()
+  println(results.exitCode)
+  /*}
   if (Sireum.runWithReporter(ISZ("logika", "verifier", file.string), reporter)._1 != 0) {
     ok = F
     failing = failing :+ file
   } else {
     passing = passing + 1
   }
+  */
   println()
 }
 
